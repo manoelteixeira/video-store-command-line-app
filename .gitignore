@@ -133,4 +133,4 @@ dist
 # Folders
 notes
 package-lock.json 
-data/*
+# data/*

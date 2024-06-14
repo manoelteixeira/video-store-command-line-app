@@ -1,0 +1,51 @@
+{
+  "movies": [
+    {
+      "id": "IRHstjwyVj",
+      "title": "Titanic",
+      "director": "James Cameron",
+      "genre": "drama",
+      "year": 1997,
+      "quantity": 100,
+      "priceInCents": 999
+    },
+    {
+      "id": "4beLalscBK",
+      "title": "Titanic Eletric Boogaloo",
+      "director": "James Cameron",
+      "genre": "drama",
+      "year": 1997,
+      "quantity": 100,
+      "priceInCents": 999
+    },
+    {
+      "id": "yVEOawlQe6",
+      "title": "Titanic - The Iceberg Revenge",
+      "director": "Ice Cube",
+      "genre": "drama",
+      "year": 1997,
+      "quantity": 100,
+      "priceInCents": 999
+    }
+  ],
+  "users": [
+    {
+      "id": "PD0L9YCjdH",
+      "name": "Mike Nelson",
+      "address": "123",
+      "phone": "444-444",
+      "username": "mikeNelson",
+      "password": "1234",
+      "isEmploy": false
+    },
+    {
+      "id": "qjy9bFx0MK",
+      "name": "random user",
+      "address": "1234 streee",
+      "phone": "555-555-555",
+      "username": "mrRandom",
+      "password": "123",
+      "isEmploy": false
+    }
+  ]
+}

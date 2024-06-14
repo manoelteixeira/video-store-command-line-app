@@ -32,3 +32,5 @@ function userFactory(quantity) {
 }
 
 module.exports = { movieFactory, userFactory };
+
+console.log(movieFactory(10));
