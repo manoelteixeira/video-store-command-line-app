@@ -1,5 +1,6 @@
 const Table = require("cli-table");
 const { logInfo, logSucess, logError, print } = require("./loggers");
+const { ne } = require("@faker-js/faker");
 
 /**
  * Return an object with the given ID
@@ -41,8 +42,55 @@ function createDataTable(data) {
   return userTable.toString();
 }
 
+function createUsersTable(users) {
+  const usersTable = new Table({
+    head: [
+      logError("ID"),
+      logInfo("Name"),
+      logInfo("Address"),
+      logInfo("Phone"),
+      logInfo("Username"),
+      logInfo("Password"),
+      logInfo("Is Employ"),
+    ],
+  });
+  for (user of users) {
+    let { id, name, address, phone, username, password, isEmploy } = user;
+    id = logError(id);
+    isEmploy = isEmploy ? logSucess("Yes") : logError("No");
+    password = logError("*".repeat(password.length));
+    usersTable.push([id, name, address, phone, username, password, isEmploy]);
+  }
+  return usersTable.toString();
+}
+
+function createMoviesTable(movies) {
+  const moviesTable = new Table({
+    head: [
+      logError("ID"),
+      logInfo("Title"),
+      logInfo("Director"),
+      logInfo("Genre"),
+      logInfo("Year"),
+      logInfo("Quantity"),
+      logInfo("Price"),
+    ],
+  });
+  for (movie of movies) {
+    let { id, title, director, genre, year, quantity, priceInCents } = movie;
+    id = logError(id);
+    quantity =
+      quantity == 0 ? logError(`${quantity}`) : logSucess(`${quantity}`);
+    let price = `$${priceInCents / 100}`;
+    moviesTable.push([id, title, director, genre, year, quantity, price]);
+  }
+  return moviesTable.toString();
+}
+
 module.exports = {
   getDataByID,
   getDataIndex,
   createDataTable,
+  createUsersTable,
+  createMoviesTable,
 };

@@ -17,10 +17,12 @@ A simple command line application for a video store.
 ## Usage
 - `npm run create-user` to add a new user
 - `npm run show-user` to show user information
+- `npm run show-all-users` to show all users information
 - `npm run update-user` to update user information
 - `npm run delete-user` to delete user
 - `npm run create-movie` to add a new movie
 - `npm run show-movie` to show movie information
+- `npm run show-all-movies` to show all movies information
 - `npm run update-movie` to update movie information
 - `npm run delete-movie` to delete move 
 - `npm run start` to run a command line interactive prompt `[In progess]`
@@ -34,6 +36,9 @@ A simple command line application for a video store.
 ### `show-user`:
 - Required parameters: `id`
 - Usage: `npm run show-user id=<id>`
+
+### `show-all-users`:
+- Usage: `npm run show-all-users`
 
 ### `update-user`:
 - Required parameters: `id`
@@ -51,6 +56,9 @@ A simple command line application for a video store.
 ### `show-movie`:
 - Required parameters: `id`
 - Usage: `npm run show-movie id=<id>`
+
+### `show-all-movies`:
+- Usage: `npm run show-all-movies`
 
 ### `update-movie`:
 - Required parameters: `id`

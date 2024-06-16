@@ -6,12 +6,14 @@ const { mainView } = require("./src/views");
 const {
   createUser,
   readUser,
+  readUsers,
   updateUser,
   deleteUser,
 } = require("./src/user-crud");
 const {
   createMovie,
   readMovie,
+  readMovies,
   updateMovie,
   deleteMovie,
 } = require("./src/movie-crud");
@@ -72,6 +74,10 @@ function main() {
       print(logInfo("Loading User..."));
       readUser(data, arguments);
       break;
+    case "--show-users":
+      print(logInfo("Loading Users..."));
+      readUsers(data);
+      break;
     case "--update-user":
       print(logInfo("Updating User..."));
       updatedData = updateUser(data, arguments);
@@ -90,6 +96,10 @@ function main() {
     case "--show-movie":
       print(logInfo("Loading Movie..."));
       readMovie(data, arguments);
+      break;
+    case "--show-movies":
+      print(logInfo("Loading Movies..."));
+      readMovies(data);
       break;
     case "--update-movie":
       print(logInfo("Updating Movie..."));

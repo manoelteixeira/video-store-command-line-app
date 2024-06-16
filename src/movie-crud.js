@@ -4,6 +4,7 @@ const {
   getDataByID,
   getDataIndex,
   createDataTable,
+  createMoviesTable,
 } = require("./helpers/dataHelpers");
 const { logInfo, logSucess, logError, print } = require("./helpers/loggers");
 const { da } = require("@faker-js/faker");
@@ -62,6 +63,10 @@ function readMovie(data, args) {
   }
 }
 
+function readMovies(data) {
+  print(createMoviesTable(data.movies));
+}
+
 /**
  * Update move
  * @param {*} data
@@ -111,4 +116,10 @@ function deleteMovie(data, args) {
   return data;
 }
 
-module.exports = { createMovie, readMovie, updateMovie, deleteMovie };
+module.exports = {
+  createMovie,
+  readMovie,
+  readMovies,
+  updateMovie,
+  deleteMovie,
+};

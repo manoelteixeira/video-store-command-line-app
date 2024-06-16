@@ -4,6 +4,7 @@ const {
   getDataByID,
   getDataIndex,
   createDataTable,
+  createUsersTable,
 } = require("./helpers/dataHelpers");
 const { logInfo, logSucess, logError, print } = require("./helpers/loggers");
 
@@ -72,6 +73,14 @@ function readUser(data, args) {
 }
 
 /**
+ * Show all users
+ * @param {*} data
+ */
+function readUsers(data) {
+  print(createUsersTable(data.users));
+}
+
+/**
  * Update User
  * @param {*} data
  * @param {*} args
@@ -131,4 +140,4 @@ function deleteUser(data, args, log = true) {
   return data;
 }
 
-module.exports = { createUser, readUser, updateUser, deleteUser };
+module.exports = { createUser, readUser, readUsers, updateUser, deleteUser };

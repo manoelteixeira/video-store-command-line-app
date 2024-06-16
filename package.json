@@ -7,10 +7,12 @@
     "test": "clear && jest",
     "create-user": "node index.js --create-user",
     "show-user": "clear && node index.js --show-user",
+    "show-all-users": "clear && node index.js --show-users",
     "update-user": "node index.js --update-user",
     "delete-user": "node index.js --delete-user",
     "create-movie": "node index.js --create-movie",
     "show-movie": "clear && node index.js --show-movie",
+    "show-all-movies": "clear && node index.js --show-movies",
     "update-movie": "node index.js --update-movie",
     "delete-movie": "node index.js --delete-movie",
     "start": "clear && node index.js --start"
