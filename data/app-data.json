@@ -7,7 +7,7 @@
       "genre": "drama",
       "year": 1997,
       "quantity": 100,
-      "priceInCents": 999
+      "priceInCents": 4043
     },
     {
       "id": "4beLalscBK",
@@ -36,7 +36,9 @@
       "phone": "444-444",
       "username": "mikeNelson",
       "password": "1234",
-      "isEmploy": true
+      "isEmploy": true,
+      "Name": "Mike Nelson",
+      "Address": "123 street"
     },
     {
       "id": "qjy9bFx0MK",
@@ -45,7 +47,17 @@
       "phone": "555-555-555",
       "username": "mrRandom",
       "password": "123",
-      "isEmploy": false
+      "isEmploy": false,
+      "Password": "123"
+    },
+    {
+      "id": "GkBN48ctIq",
+      "name": "test",
+      "address": "123 test ave",
+      "phone": "55-323-244",
+      "username": "123",
+      "password": "123",
+      "isEmploy": true
     }
   ]
 }

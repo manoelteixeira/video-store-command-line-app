@@ -63,6 +63,10 @@ function readMovie(data, args) {
   }
 }
 
+/**
+ * Show all movies
+ * @param {*} data
+ */
 function readMovies(data) {
   print(createMoviesTable(data.movies));
 }

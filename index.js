@@ -116,7 +116,7 @@ function main() {
       welcome();
       setTimeout(() => {
         mainView(load, save);
-      }, 500);
+      }, 50);
       break;
     default:
       print("Invalid Option");

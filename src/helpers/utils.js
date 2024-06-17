@@ -3,4 +3,8 @@ function choose(arr) {
   return arr[idx];
 }
 
-module.exports = { choose };
+function sleep(time = 2000) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+module.exports = { choose, sleep };
