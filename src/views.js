@@ -12,9 +12,12 @@ const {
   createUsersTable,
   createMoviesTable,
 } = require("./helpers/dataHelpers");
-const newUser = require("./user");
 
-function registerUserView(data, load, save) {
+const newUser = require("./user");
+const newMovie = require("./movie");
+const { vi } = require("@faker-js/faker");
+
+function registerUserView(data, load, save, view) {
   const userName = {
     name: "name",
     message: "Name",
@@ -78,43 +81,87 @@ function registerUserView(data, load, save) {
       } catch (err) {
         print(logError(err));
       } finally {
-        mainView(load, save);
+        view();
       }
     });
 }
 
-function loginView(data, load, save) {
-  const username = {
-    name: "username",
-    message: "Username",
+function registerMovieView(data, load, save, view) {
+  const title = {
+    name: "title",
+    message: "Title",
   };
-  const password = {
-    type: "password",
-    name: "password",
-    message: "Password",
+  const director = {
+    name: "director",
+    message: "Director",
   };
-  inquirer.prompt([username, password]).then((answers) => {
-    const { username, password } = answers;
-    const user = data.users.find((user) => user.username == username);
-    if (!user) {
-      print(logError("User not found."));
-      mainView(load, save);
-    } else if (user.password != password) {
-      print(logError("Wrong Password"));
-      mainView(load, save);
-    } else {
-      print(`Welcome ${logInfo(user.name)}.`);
-      if (user.isEmploy) {
-        setTimeout(() => {
-          employeeView(data, user, load, save);
-        }, 50);
+  const genre = {
+    name: "genre",
+    message: "Genre",
+  };
+  const year = {
+    name: "year",
+    message: "Year",
+    validate(answer) {
+      const value = parseInt(answer);
+      if (!isNaN(value) && value > 0) {
+        return true;
+      } else if (value <= 0) {
+        return "Year must be a positive Number";
       } else {
-        setTimeout(() => {
-          userView(data, user, load, save);
-        }, 50);
+        return "Year must be a number";
       }
-    }
-  });
+    },
+  };
+  const quantity = {
+    name: "quantity",
+    message: "Quantity",
+    validate(answer) {
+      const value = parseInt(answer);
+      if (!isNaN(value) && value > 0) {
+        return true;
+      } else if (value <= 0) {
+        return "Quantity must be a positive Number";
+      } else {
+        return "Quantity must be a number";
+      }
+    },
+  };
+  const price = {
+    name: "price",
+    message: "Price",
+    validate(answer) {
+      if (answer.includes(",")) {
+        return 'Use "." instead of ","';
+      } else {
+        const value = parseFloat(answer);
+        if (!isNaN(value) && value > 0) {
+          return true;
+        } else if (value <= 0) {
+          return "Price must be a positive Number";
+        } else {
+          return "Price must be a number";
+        }
+      }
+    },
+  };
+  inquirer
+    .prompt([title, director, genre, year, quantity, price])
+    .then((answers) => {
+      let { title, director, genre, year, quantity, price } = answers;
+      year = parseInt(year);
+      quantity = parseInt(quantity);
+      price = parseFloat(price);
+      try {
+        const movie = newMovie(title, director, genre, year, quantity, price);
+        data.movies.push(movie);
+        save(data);
+      } catch (err) {
+        print(logError(err));
+      } finally {
+        view();
+      }
+    });
 }
 
 async function updateUser(data, load, save, view) {
@@ -178,7 +225,23 @@ async function updateMovie(data, load, save, view) {
   });
 }
 
-function userView(data, user, load, save) {
+function usersListView(data, view) {
+  print(createUsersTable(data.users));
+  setTimeout(() => {
+    view();
+  }, 500);
+}
+
+function moviesListView(data, view) {
+  print(createMoviesTable(data.movies));
+  setTimeout(() => {
+    view();
+  }, 500);
+}
+
+function userView(user, load, save) {
+  const data = load;
+  const currentView = userView(user, load, save());
   inquirer
     .prompt([
       {
@@ -196,8 +259,43 @@ function userView(data, user, load, save) {
     });
 }
 
-function employeeView(data, user, load, save) {
-  const currentView = () => employeeView(data, user, load, save);
+function loginView(data, load, save) {
+  const username = {
+    name: "username",
+    message: "Username",
+  };
+  const password = {
+    type: "password",
+    name: "password",
+    message: "Password",
+  };
+  inquirer.prompt([username, password]).then((answers) => {
+    const { username, password } = answers;
+    const user = data.users.find((user) => user.username == username);
+    if (!user) {
+      print(logError("User not found."));
+      mainView(load, save);
+    } else if (user.password != password) {
+      print(logError("Wrong Password"));
+      mainView(load, save);
+    } else {
+      print(`Welcome ${logInfo(user.name)}.`);
+      if (user.isEmploy) {
+        setTimeout(() => {
+          employeeView(user, load, save);
+        }, 50);
+      } else {
+        setTimeout(() => {
+          userView(user, load, save);
+        }, 50);
+      }
+    }
+  });
+}
+
+function employeeView(user, load, save) {
+  const data = load();
+  const currentView = () => employeeView(user, load, save);
   inquirer
     .prompt([
       {
@@ -205,22 +303,45 @@ function employeeView(data, user, load, save) {
         name: "choice",
         message: logSucess("Employee Menu:"),
         choices: [
-          "Update movie information",
+          "View Users List",
+          "Add User",
           "Update user information",
+          "Add Movie",
+          "View Movies List",
+          "Update movie information",
           "Exit",
         ],
       },
     ])
     .then((answer) => {
-      if (answer.choice == "Update movie information") {
-        print(logSucess("Update movie information:"));
-        updateMovie(data, load, save, currentView);
-      } else if (answer.choice == "Update user information") {
-        print(logSucess("Update update user information:"));
-        updateUser(data, load, save, currentView);
-      } else if (answer.choice == "Exit") {
-        print(logError("Going Back to Main Menu..."));
-        mainView(load, save);
+      switch (answer.choice) {
+        case "View Users List":
+          print(logSucess("Loading users list..."));
+          usersListView(data, currentView);
+          break;
+        case "Add User":
+          print(logSucess("Add new user:"));
+          registerUserView(data, load, save, currentView);
+          break;
+        case "Update user information":
+          print(logSucess("Update update user information:"));
+          updateUser(data, load, save, currentView);
+          break;
+        case "View Movies List":
+          moviesListView(data, currentView);
+          break;
+        case "Add Movie":
+          print(logSucess("Add new movie:"));
+          registerMovieView(data, load, save, currentView);
+          break;
+        case "Update movie information":
+          print(logSucess("Update movie information:"));
+          updateMovie(data, load, save, currentView);
+          break;
+
+        default:
+          print(logError("Going Back to Main Menu..."));
+          mainView(load, save);
       }
     });
 }
@@ -240,7 +361,7 @@ function mainView(load, save) {
       if (answer.choice == "Log in") {
         loginView(data, load, save);
       } else if (answer.choice == "Register") {
-        registerUserView(data, load, save);
+        registerUserView(data, load, save, () => mainView(load, save));
       } else {
         print("Exiting..");
       }

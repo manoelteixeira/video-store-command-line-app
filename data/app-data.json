@@ -24,8 +24,17 @@
       "director": "Ice Cube",
       "genre": "drama",
       "year": 1997,
-      "quantity": 100,
+      "quantity": 0,
       "priceInCents": 999
+    },
+    {
+      "id": "75CPXYvnPi",
+      "title": "Titanic 2",
+      "director": "Jame Doe",
+      "genre": "action",
+      "year": 2020,
+      "quantity": 20,
+      "priceInCents": 1203
     }
   ],
   "users": [
@@ -43,7 +52,7 @@
     {
       "id": "qjy9bFx0MK",
       "name": "random user",
-      "address": "1234 streee",
+      "address": "123 rrt sd",
       "phone": "555-555-555",
       "username": "mrRandom",
       "password": "123",
@@ -56,6 +65,24 @@
       "address": "123 test ave",
       "phone": "55-323-244",
       "username": "123",
+      "password": "123",
+      "isEmploy": true
+    },
+    {
+      "id": "n8fnWW1SG-",
+      "name": "Test User",
+      "address": "12 Street 3",
+      "phone": "555-555-555",
+      "username": "test",
+      "password": "123",
+      "isEmploy": false
+    },
+    {
+      "id": "LiXHiw1ZWV",
+      "name": "Test User 2",
+      "address": "123 street",
+      "phone": "333-333-333",
+      "username": "test2",
       "password": "123",
       "isEmploy": true
     }
