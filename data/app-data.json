@@ -24,7 +24,7 @@
       "director": "Ice Cube",
       "genre": "drama",
       "year": 1997,
-      "quantity": 0,
+      "quantity": 10,
       "priceInCents": 999
     },
     {
@@ -33,7 +33,7 @@
       "director": "Jame Doe",
       "genre": "action",
       "year": 2020,
-      "quantity": 20,
+      "quantity": 0,
       "priceInCents": 1203
     }
   ],
@@ -73,9 +73,56 @@
       "name": "Test User",
       "address": "12 Street 3",
       "phone": "555-555-555",
-      "username": "test",
+      "username": "321",
       "password": "123",
-      "isEmploy": false
+      "isEmploy": false,
+      "cart": [
+        {
+          "id": "IRHstjwyVj",
+          "title": "Titanic",
+          "director": "James Cameron",
+          "genre": "drama",
+          "year": 1997,
+          "quantity": 100,
+          "priceInCents": 4043
+        },
+        {
+          "id": "4beLalscBK",
+          "title": "Titanic Eletric Boogaloo",
+          "director": "James Cameron",
+          "genre": "drama",
+          "year": 1997,
+          "quantity": 100,
+          "priceInCents": 999
+        },
+        {
+          "id": "yVEOawlQe6",
+          "title": "Titanic - The Iceberg Revenge",
+          "director": "Ice Cube",
+          "genre": "drama",
+          "year": 1997,
+          "quantity": 10,
+          "priceInCents": 999
+        },
+        {
+          "id": "4beLalscBK",
+          "title": "Titanic Eletric Boogaloo",
+          "director": "James Cameron",
+          "genre": "drama",
+          "year": 1997,
+          "quantity": 100,
+          "priceInCents": 999
+        },
+        {
+          "id": "yVEOawlQe6",
+          "title": "Titanic - The Iceberg Revenge",
+          "director": "Ice Cube",
+          "genre": "drama",
+          "year": 1997,
+          "quantity": 10,
+          "priceInCents": 999
+        }
+      ]
     },
     {
       "id": "LiXHiw1ZWV",
@@ -84,7 +131,10 @@
       "phone": "333-333-333",
       "username": "test2",
       "password": "123",
-      "isEmploy": true
+      "isEmploy": true,
+      "cart": [
+        "ok"
+      ]
     }
   ]
 }

@@ -87,10 +87,13 @@ function createMoviesTable(movies) {
   return moviesTable.toString();
 }
 
+function createCartTable(cart) {}
+
 module.exports = {
   getDataByID,
   getDataIndex,
   createDataTable,
   createUsersTable,
   createMoviesTable,
+  createCartTable,
 };

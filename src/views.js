@@ -11,6 +11,8 @@ const {
   getDataIndex,
   createUsersTable,
   createMoviesTable,
+  createCartTable,
+  getDataByID,
 } = require("./helpers/dataHelpers");
 
 const newUser = require("./user");
@@ -239,58 +241,73 @@ function moviesListView(data, view) {
   }, 500);
 }
 
+function cartItemsView(data, view) {}
+
+function addToCartView(data, user, save, view) {
+  const userIdx = getDataIndex(data.users, user.id);
+  const movies = data.movies
+    .filter((movie) => movie.quantity > 0)
+    .map((movie) => {
+      return {
+        name: `${logError(movie.year)} ${logSucess(movie.title)} ${logInfo(
+          "by"
+        )} ${movie.director}`,
+        value: movie.id,
+      };
+    });
+  inquirer
+    .prompt([
+      {
+        type: "checkbox",
+        name: "movies",
+        message: "Select movies all the movies you want.",
+        choices: [...movies],
+      },
+    ])
+    .then((answer) => {
+      try {
+        const cart = answer.movies.map((id) => getDataByID(data.movies, id));
+        if (user.cart) {
+          data.users[userIdx].cart.push(...cart);
+        } else {
+          data.users[userIdx].cart = cart;
+        }
+        save(data);
+      } catch (err) {
+        print(logError(err));
+      } finally {
+        view();
+      }
+    });
+}
+
 function userView(user, load, save) {
-  const data = load;
-  const currentView = userView(user, load, save());
+  const data = load();
+  const currentView = () => userView(user, load, save);
+  // const userIdx = getDataIndex(data.users, user.id);
   inquirer
     .prompt([
       {
         type: "list",
         name: "choice",
         message: logSucess("Costumer menu:"),
-        choices: ["Add movie to cart", "See cart", "Exit"],
+        choices: ["See cart", "Add movie to cart", "Check out", "Exit"],
       },
     ])
     .then((answer) => {
-      const { choice } = answer.choice;
-      if (choice == "Exit") {
-        mainView(load, save);
+      switch (answer.choice) {
+        case "See cart":
+          break;
+        case "Add movie to cart":
+          addToCartView(data, user, save, currentView);
+          break;
+        case "Check out":
+          break;
+        default:
+          print(logError("Going Back to Main Menu..."));
+          mainView(load, save);
       }
     });
-}
-
-function loginView(data, load, save) {
-  const username = {
-    name: "username",
-    message: "Username",
-  };
-  const password = {
-    type: "password",
-    name: "password",
-    message: "Password",
-  };
-  inquirer.prompt([username, password]).then((answers) => {
-    const { username, password } = answers;
-    const user = data.users.find((user) => user.username == username);
-    if (!user) {
-      print(logError("User not found."));
-      mainView(load, save);
-    } else if (user.password != password) {
-      print(logError("Wrong Password"));
-      mainView(load, save);
-    } else {
-      print(`Welcome ${logInfo(user.name)}.`);
-      if (user.isEmploy) {
-        setTimeout(() => {
-          employeeView(user, load, save);
-        }, 50);
-      } else {
-        setTimeout(() => {
-          userView(user, load, save);
-        }, 50);
-      }
-    }
-  });
 }
 
 function employeeView(user, load, save) {
@@ -306,8 +323,8 @@ function employeeView(user, load, save) {
           "View Users List",
           "Add User",
           "Update user information",
-          "Add Movie",
           "View Movies List",
+          "Add Movie",
           "Update movie information",
           "Exit",
         ],
@@ -344,6 +361,40 @@ function employeeView(user, load, save) {
           mainView(load, save);
       }
     });
+}
+
+function loginView(data, load, save) {
+  const username = {
+    name: "username",
+    message: "Username",
+  };
+  const password = {
+    type: "password",
+    name: "password",
+    message: "Password",
+  };
+  inquirer.prompt([username, password]).then((answers) => {
+    const { username, password } = answers;
+    const user = data.users.find((user) => user.username == username);
+    if (!user) {
+      print(logError("User not found."));
+      mainView(load, save);
+    } else if (user.password != password) {
+      print(logError("Wrong Password"));
+      mainView(load, save);
+    } else {
+      print(`Welcome ${logInfo(user.name)}.`);
+      if (user.isEmploy) {
+        setTimeout(() => {
+          employeeView(user, load, save);
+        }, 50);
+      } else {
+        setTimeout(() => {
+          userView(user, load, save);
+        }, 50);
+      }
+    }
+  });
 }
 
 function mainView(load, save) {
